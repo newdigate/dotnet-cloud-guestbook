@@ -18,3 +18,7 @@ spec:
   ports:
   - port: 80
     targetPort: http-server
+    name: http
+  - port: 1234
+    targetPort: metrics
+    name: prommetrics
