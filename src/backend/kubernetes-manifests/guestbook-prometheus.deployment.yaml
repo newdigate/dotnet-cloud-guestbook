@@ -1,0 +1,30 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dotnet-guestbook-prometheus
+  labels:
+    app: dotnet-guestbook
+    tier: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dotnet-guestbook
+      tier: prometheus
+  template:
+    metadata:
+      labels:
+        app: dotnet-guestbook
+        tier: prometheus
+    spec:
+      containers:
+        - name: prometheus
+          image: bitnami/prometheus:latest
+          volumeMounts:
+          - mountPath: /opt/bitnami/prometheus/conf/prometheus.yml
+            name: prometheus-config
+      volumes:
+      - name: prometheus-config
+        hostPath:
+          path: /opt/bitnami/prometheus/conf/prometheus.yml
+          type: File

@@ -1,0 +1,28 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dotnet-guestbook-grafana
+  labels:
+    app: dotnet-guestbook
+    tier: graphana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dotnet-guestbook
+      tier: graphana
+  template:
+    metadata:
+      labels:
+        app: dotnet-guestbook
+        tier: graphana
+    spec:
+      containers:
+        - name: grafana
+          image: bitnami/grafana:latest
+          ports:
+            - name: grafana-rpc
+              containerPort: 3000
+          env:
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              value: bitnami

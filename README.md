@@ -1,3 +1,11 @@
+minikube start
+minikube mount src/backend/prometheus-config:/opt/bitnami/prometheus/conf &
+minikube dashboard &
+* configure grafana
+  * login to [grafana](http://127.0.0.1:3000) admin, password: bitnami
+  * import prometheus datasource http://dotnet-guestbook-prometheus:9090
+  * import grafana dashboard - https://grafana.com/grafana/dashboards/10915
+
 # Guestbook with Cloud Code
 
 The Guestbook sample demonstrates how to deploy a Kubernetes application with a front end service and a back end service using the Cloud Code IDE extension.  

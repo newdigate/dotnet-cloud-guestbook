@@ -16,21 +16,14 @@ namespace dotnet_guestbook
             Metrics.CreateCounter("sampleapp_ticks_total", "Just keeps on ticking");
         public static void Main(string[] args)
         {
-            while (!Debugger.IsAttached) {
+            /* while (!Debugger.IsAttached) {
                 Thread.Sleep(1000);
-            }
-            var server = new MetricServer(hostname: "127.0.0.1", port: 1234);
-            server.RequestPredicate = request => 
-                {
-                    Console.WriteLine(request.Url.ToString());
-                    return true;
-                };
-            server.Start();
+            } */
 
             CancellationTokenSource cancelSource = new CancellationTokenSource();
             Task background = Task.Factory.StartNew ( () => {
                     while(!cancelSource.IsCancellationRequested) {
-                        Console.WriteLine("Tick/Tock");
+                        //Console.WriteLine("Tick/Tock");
                         TickTock.Inc();
                         Thread.Sleep(TimeSpan.FromSeconds(1));
                     }
@@ -43,6 +36,7 @@ namespace dotnet_guestbook
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                
                 .ConfigureLogging(logging =>
                 {
                     logging.AddDebug();
