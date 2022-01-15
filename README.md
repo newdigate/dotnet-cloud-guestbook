@@ -33,6 +33,9 @@ c#, .net6.0, aspnet-core, minikube, skaffold, mongodb, prometheus, grafana
   * import prometheus datasource http://dotnet-guestbook-prometheus:9090
   * import grafana dashboard - https://grafana.com/grafana/dashboards/10915
 
+* opentelemetry
+  * [getting-started](https://opentelemetry.io/docs/instrumentation/net/getting-started/)
+
 ## notes
 * cloned from https://github.com/GoogleCloudPlatform/cloud-code-vscode
 * FIX: OCI runtime exec failed: exec failed: container_linux.go:380: starting container process caused: no such file or directory: unknown
