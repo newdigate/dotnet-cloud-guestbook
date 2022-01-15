@@ -7,7 +7,6 @@ using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using frontend;
 using System.Net.Http.Headers;
-using Prometheus;
 
 namespace dotnet_guestbook.Controllers
 {
@@ -16,10 +15,10 @@ namespace dotnet_guestbook.Controllers
         private ILogger _logger;
         private IEnvironmentConfiguration _envConfig;
         private IHttpClientFactory _factory;
-        private static readonly Counter _metric_index_get = Metrics.CreateCounter("sampleapp_home_controller_index_get", "index_get");
-        private static readonly Counter _metric_index_get_error = Metrics.CreateCounter("sampleapp_home_controller_index_get_error", "index_get_error");
-        private static readonly Counter _metric_index_post = Metrics.CreateCounter("sampleapp_home_controller_index_post", "index_post");
-        private static readonly Counter _metric_index_post_error = Metrics.CreateCounter("sampleapp_home_controller_index_post_error", "index_post_error");
+        //private static readonly Counter _metric_index_get = Metrics.CreateCounter("sampleapp_home_controller_index_get", "index_get");
+        //private static readonly Counter _metric_index_get_error = Metrics.CreateCounter("sampleapp_home_controller_index_get_error", "index_get_error");
+        //private static readonly Counter _metric_index_post = Metrics.CreateCounter("sampleapp_home_controller_index_post", "index_post");
+        //private static readonly Counter _metric_index_post_error = Metrics.CreateCounter("sampleapp_home_controller_index_post_error", "index_post_error");
 
         public HomeController(
             IHttpClientFactory httpFactory,
@@ -35,7 +34,7 @@ namespace dotnet_guestbook.Controllers
         public async Task<IActionResult> Index()
         {
             _logger.LogInformation($"Getting all messages");
-            _metric_index_get.Inc();
+            //_metric_index_get.Inc();
             // Get the entries from the backend
             try
             {
@@ -53,7 +52,7 @@ namespace dotnet_guestbook.Controllers
             catch (Exception e)
             {
                 _logger.LogError(e.ToString());
-                _metric_index_get_error.Inc();
+                //_metric_index_get_error.Inc();
                 return View();
             }
         }
@@ -63,7 +62,7 @@ namespace dotnet_guestbook.Controllers
         public async Task<IActionResult> Post([FromForm] GuestbookEntry entry)
         {
             _logger.LogInformation($"Calling backend at {_envConfig.BackendAddress} for message authored by {entry.Name}");
-            _metric_index_post.Inc();
+            //_metric_index_post.Inc();
             try
             {
                 var httpClient = _factory.CreateClient();
@@ -76,7 +75,7 @@ namespace dotnet_guestbook.Controllers
             catch (Exception e)
             {
                 _logger.LogError(e.ToString());
-                _metric_index_post_error.Inc();
+                //_metric_index_post_error.Inc();
                 return View();
             }
         }

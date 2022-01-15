@@ -1,37 +1,19 @@
-﻿using System;
-using System.Diagnostics;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Prometheus;
 
 namespace dotnet_guestbook
 {
     public class Program
     {
-        private static readonly Counter TickTock =
-            Metrics.CreateCounter("sampleapp_ticks_total", "Just keeps on ticking");
         public static void Main(string[] args)
         {
+            // Uncomment this to attach debugger on start-up
             /* while (!Debugger.IsAttached) {
                 Thread.Sleep(1000);
             } */
 
-            CancellationTokenSource cancelSource = new CancellationTokenSource();
-            Task background = Task.Factory.StartNew ( () => {
-                    while(!cancelSource.IsCancellationRequested) {
-                        //Console.WriteLine("Tick/Tock");
-                        TickTock.Inc();
-                        Thread.Sleep(TimeSpan.FromSeconds(1));
-                    }
-                }, cancelSource.Token);
-
             CreateHostBuilder(args).Build().Run();
-            cancelSource.Cancel();
-            background.Wait();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
