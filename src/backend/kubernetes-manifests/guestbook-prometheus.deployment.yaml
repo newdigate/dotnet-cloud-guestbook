@@ -19,12 +19,5 @@ spec:
     spec:
       containers:
         - name: prometheus
-          image: bitnami/prometheus:latest
-          volumeMounts:
-          - mountPath: /opt/bitnami/prometheus/conf/prometheus.yml
-            name: prometheus-config
-      volumes:
-      - name: prometheus-config
-        hostPath:
-          path: /opt/bitnami/prometheus/conf/prometheus.yml
-          type: File
+          image: my-prometheus
+          imagePullPolicy: Never
