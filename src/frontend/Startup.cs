@@ -8,11 +8,18 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+using Prometheus;
 
 namespace dotnet_guestbook
 {
     public class Startup
     {
+
+        // Define some important constants and the activity source
+        string serviceName = "MyCompany.MyProduct.MyService";
+        string serviceVersion = "1.0.0";
         private EnvironmentConfiguration envConfig;
 
         public Startup(IConfiguration configuration)
@@ -32,8 +39,24 @@ namespace dotnet_guestbook
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddHttpClient(Options.DefaultName);
-                //.UseHttpClientMetrics();
+
+            services
+                .AddHttpClient(Options.DefaultName)
+                .UseHttpClientMetrics();
+
+            services.AddOpenTelemetryTracing(b =>
+            {
+                b
+                .AddConsoleExporter()
+                .AddSource(serviceName)
+                .SetResourceBuilder(
+                    ResourceBuilder.CreateDefault()
+                        .AddService(serviceName: serviceName, serviceVersion: serviceVersion))
+                .AddHttpClientInstrumentation()
+                .AddAspNetCoreInstrumentation();
+                //.AddSqlClientInstrumentation();
+            });
+
             services.AddSingleton<IEnvironmentConfiguration>(envConfig);
             services.AddLogging();
             services.AddControllersWithViews();
@@ -74,7 +97,7 @@ namespace dotnet_guestbook
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseRouting();/*
+            app.UseRouting();
             app.UseHttpMetrics(options =>
             {
                 // This identifies the page when using Razor Pages.
@@ -85,7 +108,7 @@ namespace dotnet_guestbook
                 //metricsApp.UseMiddleware<BasicAuthMiddleware>("Contoso Corporation");
                 // We already specified URL prefix in .Map() above, no need to specify it again here.
                 metricsApp.UseMetricServer("");
-            }); */
+            });
             app.UseEndpoints(endpoints =>
             {
                 // endpoints.MapControllerRoute(

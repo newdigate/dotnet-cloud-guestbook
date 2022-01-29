@@ -44,7 +44,7 @@
             <div class="card my-3 col-12">
                 <div class="card-body">
                     <h5 class="card-title">@Html.DisplayFor(modelItem => msg.Name)</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(modelItem => DateTime.UtcNow.Subtract(msg.Date).Minutes) minutes ago</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(modelItem => msg.Date.HasValue? DateTime.UtcNow.Subtract(msg.Date.Value).Minutes : 0) minutes ago</h6>
                     <br>
                     <p class="card-text">
                         @Html.DisplayFor(modelItem => msg.Message)

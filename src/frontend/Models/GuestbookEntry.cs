@@ -10,12 +10,12 @@ namespace dotnet_guestbook.Models
     public class GuestbookEntry
     {
         [DataMember(Name = "name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [DataMember(Name = "message")]
-        public string Message { get; set; }
+        public string? Message { get; set; }
 
         [DataMember(Name = "date")]
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
     }
 }
