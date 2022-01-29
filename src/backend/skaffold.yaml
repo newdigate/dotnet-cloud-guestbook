@@ -9,6 +9,8 @@ build:
   artifacts:
   - image: dotnet-guestbook-backend
     context: .
+  - image: my-prometheus
+    context: prometheus
 # defines the Kubernetes manifests to deploy on each run
 deploy:
   kubectl:
@@ -26,4 +28,7 @@ profiles:
       context: .
       buildpacks:
         builder: "gcr.io/buildpacks/builder:v1"
-        
+    - image: my-prometheus
+      context: prometheus
+      buildpacks:
+        builder: "gcr.io/buildpacks/builder:v1"  
