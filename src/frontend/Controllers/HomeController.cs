@@ -78,8 +78,9 @@ namespace dotnet_guestbook.Controllers
                 var httpClient = _factory.CreateClient();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                await httpClient.PostAsJsonAsync<GuestbookEntry>(_envConfig.BackendAddress, entry);
-
+                HttpResponseMessage responseMessage = await httpClient.PostAsJsonAsync<GuestbookEntry>(_envConfig.BackendAddress, entry);
+                string responseContent = await responseMessage.Content.ReadAsStringAsync();
+                _logger.LogInformation($"RESPONSE: {_envConfig.BackendAddress}: {responseContent}");
                 return RedirectToAction("Index");
             }
             catch (Exception e)

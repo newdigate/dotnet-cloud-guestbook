@@ -10,14 +10,14 @@ namespace backend
     {
         [DataMember(Name = "name")]
         [BsonElement("Name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [DataMember(Name = "message")]
         [BsonElement("Message")]
-        public string Message { get; set; }
+        public string? Message { get; set; }
 
         [DataMember(Name = "date")]
         [BsonElement("Date")]
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
     }
 }
