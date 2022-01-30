@@ -27,3 +27,13 @@ spec:
           image: mongo:4
           ports:
             - containerPort: 27017
+          volumeMounts:
+            - mountPath: /data/db
+              name: pv-mongodb
+      volumes:
+      - name: pv-mongodb
+        hostPath:
+          # directory location on host
+          path: /Users/nicholasnewdigate/Development/docker/docker-storage/mongodb
+          # this field is optional
+          type: Directory
