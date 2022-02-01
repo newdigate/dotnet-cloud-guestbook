@@ -3,11 +3,11 @@
 apiVersion: skaffold/v2beta18
 kind: Config
 metadata:
-  name: backend
+  name: database
 build:
   # defines where to find the code at build time and where to push the resulting image
   artifacts:
-  - image: dotnet-guestbook-backend
+  - image: dotnet-guestbook-mongodb
     context: .
 # defines the Kubernetes manifests to deploy on each run
 deploy:
@@ -22,7 +22,8 @@ profiles:
 - name: buildpacks
   build:
     artifacts:
-    - image: dotnet-guestbook-backend
+    - image: dotnet-guestbook-mongodb
       context: .
       buildpacks:
         builder: "gcr.io/buildpacks/builder:v1"
+        

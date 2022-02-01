@@ -24,8 +24,7 @@ c#, .net6.0, aspnet-core, minikube, skaffold, mongodb, prometheus, grafana
 > cd src/backend/prometheus-config && minikube mount $(PWD):/opt/bitnami/prometheus/conf/ &
 > minikube ssh -- docker system prune
 > kubectl exec --stdin --tty container-name -- /bin/bash
-
-
+> docker run --name proxy --rm -v /Users/nicholasnewdigate/Development/docker/proxy-cache:/cachedir -p 8000:8000 pmoust/squid-deb-proxy
 ```
 
 * configure grafana

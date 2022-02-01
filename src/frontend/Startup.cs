@@ -56,7 +56,7 @@ namespace dotnet_guestbook
                 .AddAspNetCoreInstrumentation();
                 //.AddSqlClientInstrumentation();
             });
-
+            services.AddOpenTelemetryMetrics();
             services.AddSingleton<IEnvironmentConfiguration>(envConfig);
             services.AddLogging();
             services.AddControllersWithViews();

@@ -3,12 +3,14 @@
 apiVersion: skaffold/v2beta18
 kind: Config
 metadata:
-  name: backend
+  name: prometheus
 build:
   # defines where to find the code at build time and where to push the resulting image
   artifacts:
-  - image: dotnet-guestbook-backend
-    context: .
+  - image: dotnet-guestbook-prometheus
+    context: prometheus
+  - image: dotnet-guestbook-grafana
+    context: grafana
 # defines the Kubernetes manifests to deploy on each run
 deploy:
   kubectl:
@@ -22,7 +24,11 @@ profiles:
 - name: buildpacks
   build:
     artifacts:
-    - image: dotnet-guestbook-backend
-      context: .
+    - image: dotnet-guestbook-prometheus
+      context: prometheus
+      buildpacks:
+        builder: "gcr.io/buildpacks/builder:v1"
+    - image: dotnet-guestbook-grafana
+      context: grafana
       buildpacks:
         builder: "gcr.io/buildpacks/builder:v1"

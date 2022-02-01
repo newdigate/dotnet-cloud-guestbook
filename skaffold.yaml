@@ -12,4 +12,6 @@ build:
 requires:
   - path: ./src/frontend
   - path: ./src/backend
+  - path: ./src/database
+  - path: ./src/monitoring
   

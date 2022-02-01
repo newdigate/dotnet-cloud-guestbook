@@ -19,5 +19,4 @@ spec:
     spec:
       containers:
         - name: prometheus
-          image: my-prometheus
-          imagePullPolicy: Never
+          image: dotnet-guestbook-prometheus

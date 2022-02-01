@@ -1,6 +1,12 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System;
+using System.Diagnostics;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Prometheus;
 
 namespace dotnet_guestbook
 {
@@ -8,11 +14,9 @@ namespace dotnet_guestbook
     {
         public static void Main(string[] args)
         {
-            // Uncomment this to attach debugger on start-up
             /* while (!Debugger.IsAttached) {
                 Thread.Sleep(1000);
             } */
-
             CreateHostBuilder(args).Build().Run();
         }
 

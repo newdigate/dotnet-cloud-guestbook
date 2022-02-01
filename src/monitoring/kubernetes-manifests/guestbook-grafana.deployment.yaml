@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: grafana
-          image: bitnami/grafana:latest
+          image: dotnet-guestbook-grafana
           ports:
             - name: grafana-rpc
               containerPort: 3000
