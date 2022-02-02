@@ -10,19 +10,18 @@ Using google [cloud-code](https://marketplace.visualstudio.com/items?itemName=Go
 
 ## requirements
 * If running locally, you'll need a **container** or **virtual machine manager**
-  * <a href="https://minikube.sigs.k8s.io/docs/drivers/docker/">Docker</a>
-  | <a href="https://minikube.sigs.k8s.io/docs/drivers/hyperkit/">Hyperkit</a>
-  | <a href="https://minikube.sigs.k8s.io/docs/drivers/hyperv/">Hyper-V</a>
-  | <a href="https://minikube.sigs.k8s.io/docs/drivers/kvm2/">KVM</a>
-  | <a href="https://minikube.sigs.k8s.io/docs/drivers/parallels/">Parallels</a>
-  | <a href="https://minikube.sigs.k8s.io/docs/drivers/podman/">Podman</a>
-  | <a href="https://minikube.sigs.k8s.io/docs/drivers/virtualbox/">VirtualBox</a>
-  | <a href="https://minikube.sigs.k8s.io/docs/drivers/vmware/">VMware Fusion/Workstation</a>
+  * using [minikube](https://minikube.sigs.k8s.io/docs/start/)
+    * <a href="https://minikube.sigs.k8s.io/docs/drivers/docker/">Docker</a>
+    | <a href="https://minikube.sigs.k8s.io/docs/drivers/hyperkit/">Hyperkit</a>
+    | <a href="https://minikube.sigs.k8s.io/docs/drivers/hyperv/">Hyper-V</a>
+    | <a href="https://minikube.sigs.k8s.io/docs/drivers/kvm2/">KVM</a>
+    | <a href="https://minikube.sigs.k8s.io/docs/drivers/parallels/">Parallels</a>
+    | <a href="https://minikube.sigs.k8s.io/docs/drivers/podman/">Podman</a>
+    | <a href="https://minikube.sigs.k8s.io/docs/drivers/virtualbox/">VirtualBox</a>
+    | <a href="https://minikube.sigs.k8s.io/docs/drivers/vmware/">VMware Fusion/Workstation</a>
+  * or [kubernetes in docker](https://docs.docker.com/desktop/kubernetes/)
 * For Kubernetes you'll need:
   * access to a running kubernetes cluster (local, or remote) via [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) client
-  * for local access:
-    * [minikube](https://minikube.sigs.k8s.io/docs/start/)
-    * [kubernetes in docker](https://docs.docker.com/desktop/kubernetes/)
 * [vscode](https://code.visualstudio.com/)
 * vscode extension: [cloud-code](https://marketplace.visualstudio.com/items?itemName=GoogleCloudTools.cloudcode)
 
