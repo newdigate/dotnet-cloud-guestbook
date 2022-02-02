@@ -23,10 +23,13 @@ Using google [cloud-code](https://marketplace.visualstudio.com/items?itemName=Go
   * for local access:
     * [minikube](https://minikube.sigs.k8s.io/docs/start/)
     * [kubernetes in docker](https://docs.docker.com/desktop/kubernetes/)
-    * [rancher desktop](https://rancherdesktop.io/)
 * [vscode](https://code.visualstudio.com/)
-* vscode extension [cloud-code](https://marketplace.visualstudio.com/items?itemName=GoogleCloudTools.cloudcode)
+* vscode extension: [cloud-code](https://marketplace.visualstudio.com/items?itemName=GoogleCloudTools.cloudcode)
 
+## getting started
+* open in visual studio code
+* edit ```kubernetes/monogdb-persistent-volume.yaml``` - change the hostPath to point to a directory which will store your mongodb database files
+* from cloud code panel, select ```run app``` or ```debug app```
 
 ## debug and watch changes
 ``` sh
