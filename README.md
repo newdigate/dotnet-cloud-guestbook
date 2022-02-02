@@ -1,25 +1,38 @@
 # .net guestbook 
-c#, .net6.0, aspnet-core, minikube, skaffold, mongodb, prometheus, grafana
+```c#```, ```.net6.0```, ```aspnet-core```, ```minikube```, ```skaffold```, ```mongodb```, ```prometheus```, ```grafana```
+
+Using google [cloud-code](https://marketplace.visualstudio.com/items?itemName=GoogleCloudTools.cloudcode) sample [dotnet-guestbook](https://github.com/GoogleCloudPlatform/cloud-code-samples/tree/master/dotnet/dotnet-guestbook) code as a starting point, I've added some features:
+  * a persistent database
+  * prometheus instance for monitoring
+  * grafana for visualization
 
 *work in progress*
 
 ## requirements
 * If running locally, you'll need a **container** or **virtual machine manager**
   * <a href="https://minikube.sigs.k8s.io/docs/drivers/docker/">Docker</a>
-  * <a href="https://minikube.sigs.k8s.io/docs/drivers/hyperkit/">Hyperkit</a>
-  * <a href="https://minikube.sigs.k8s.io/docs/drivers/hyperv/">Hyper-V</a>
-  * <a href="https://minikube.sigs.k8s.io/docs/drivers/kvm2/">KVM</a>
-  * <a href="https://minikube.sigs.k8s.io/docs/drivers/parallels/">Parallels</a>
-  * <a href="https://minikube.sigs.k8s.io/docs/drivers/podman/">Podman</a>
-  * <a href="https://minikube.sigs.k8s.io/docs/drivers/virtualbox/">VirtualBox</a>
-  * <a href="https://minikube.sigs.k8s.io/docs/drivers/vmware/">VMware Fusion/Workstation</a>
-* For Kubernetes and kubectl
-  * you'll need access to a running kubernetes cluster (local, or remote)
-  * you[kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
-  * [minikube](https://minikube.sigs.k8s.io/docs/start/)
-  * [kubernetes in docker](https://docs.docker.com/desktop/kubernetes/)
+  | <a href="https://minikube.sigs.k8s.io/docs/drivers/hyperkit/">Hyperkit</a>
+  | <a href="https://minikube.sigs.k8s.io/docs/drivers/hyperv/">Hyper-V</a>
+  | <a href="https://minikube.sigs.k8s.io/docs/drivers/kvm2/">KVM</a>
+  | <a href="https://minikube.sigs.k8s.io/docs/drivers/parallels/">Parallels</a>
+  | <a href="https://minikube.sigs.k8s.io/docs/drivers/podman/">Podman</a>
+  | <a href="https://minikube.sigs.k8s.io/docs/drivers/virtualbox/">VirtualBox</a>
+  | <a href="https://minikube.sigs.k8s.io/docs/drivers/vmware/">VMware Fusion/Workstation</a>
+* For Kubernetes you'll need:
+  * access to a running kubernetes cluster (local, or remote) via [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) client
+  * for local access:
+    * [minikube](https://minikube.sigs.k8s.io/docs/start/)
+    * [kubernetes in docker](https://docs.docker.com/desktop/kubernetes/)
+    * [rancher desktop](https://rancherdesktop.io/)
 * [vscode](https://code.visualstudio.com/)
 * vscode extension [cloud-code](https://marketplace.visualstudio.com/items?itemName=GoogleCloudTools.cloudcode)
+
+
+## debug and watch changes
+``` sh
+> cd dotnet-cloud-guestbook
+> skaffold debug -v info --port-forward --auto-build --auto-deploy --auto-sync --rpc-http-port 57994 --filename skaffold.yaml --wait-for-deletions-max 2m0s --wait-for-connection
+```
 
 ## some helpfull commands, urls
 ```sh
