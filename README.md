@@ -30,7 +30,7 @@ Using google [cloud-code](https://marketplace.visualstudio.com/items?itemName=Go
 * edit ```kubernetes/monogdb-persistent-volume.yaml``` - change the hostPath to point to a directory which will store your mongodb database files
 * from cloud code panel, select ```run app``` or ```debug app```
 
-## debug and watch changes
+## command line
 ``` sh
 > cd dotnet-cloud-guestbook
 > skaffold debug -v info --port-forward --auto-build --auto-deploy --auto-sync --rpc-http-port 57994 --filename skaffold.yaml --wait-for-deletions-max 2m0s --wait-for-connection
