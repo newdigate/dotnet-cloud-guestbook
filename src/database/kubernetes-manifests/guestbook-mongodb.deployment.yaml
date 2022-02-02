@@ -27,5 +27,5 @@ spec:
               name: pv-mongodb
       volumes:
       - name: pv-mongodb
-        hostPath:
-          path: /Users/nicholasnewdigate/Development/docker/docker-storage/mongodb
+        persistentVolumeClaim:
+          claimName: dotnet-guestbook-monogdb-persistent-volume-claim
