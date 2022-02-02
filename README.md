@@ -4,16 +4,20 @@ c#, .net6.0, aspnet-core, minikube, skaffold, mongodb, prometheus, grafana
 *work in progress*
 
 ## requirements
-* Container or virtual machine manager -
-  <a href="https://minikube.sigs.k8s.io/docs/drivers/docker/">Docker</a>
-  <a href="https://minikube.sigs.k8s.io/docs/drivers/hyperkit/">Hyperkit</a>
-  <a href="https://minikube.sigs.k8s.io/docs/drivers/hyperv/">Hyper-V</a>
-  <a href="https://minikube.sigs.k8s.io/docs/drivers/kvm2/">KVM</a>
-  <a href="https://minikube.sigs.k8s.io/docs/drivers/parallels/">Parallels</a>
-  <a href="https://minikube.sigs.k8s.io/docs/drivers/podman/">Podman</a>
-  <a href="https://minikube.sigs.k8s.io/docs/drivers/virtualbox/">VirtualBox</a>
-  <a href="https://minikube.sigs.k8s.io/docs/drivers/vmware/">VMware Fusion/Workstation</a>
-* [minikube](https://minikube.sigs.k8s.io/docs/start/)
+* If running locally, you'll need a **container** or **virtual machine manager**
+  * <a href="https://minikube.sigs.k8s.io/docs/drivers/docker/">Docker</a>
+  * <a href="https://minikube.sigs.k8s.io/docs/drivers/hyperkit/">Hyperkit</a>
+  * <a href="https://minikube.sigs.k8s.io/docs/drivers/hyperv/">Hyper-V</a>
+  * <a href="https://minikube.sigs.k8s.io/docs/drivers/kvm2/">KVM</a>
+  * <a href="https://minikube.sigs.k8s.io/docs/drivers/parallels/">Parallels</a>
+  * <a href="https://minikube.sigs.k8s.io/docs/drivers/podman/">Podman</a>
+  * <a href="https://minikube.sigs.k8s.io/docs/drivers/virtualbox/">VirtualBox</a>
+  * <a href="https://minikube.sigs.k8s.io/docs/drivers/vmware/">VMware Fusion/Workstation</a>
+* For Kubernetes and kubectl
+  * you'll need access to a running kubernetes cluster (local, or remote)
+  * you[kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
+  * [minikube](https://minikube.sigs.k8s.io/docs/start/)
+  * [kubernetes in docker](https://docs.docker.com/desktop/kubernetes/)
 * [vscode](https://code.visualstudio.com/)
 * vscode extension [cloud-code](https://marketplace.visualstudio.com/items?itemName=GoogleCloudTools.cloudcode)
 
