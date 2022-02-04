@@ -26,8 +26,13 @@ Using google [cloud-code](https://marketplace.visualstudio.com/items?itemName=Go
 * vscode extension: [cloud-code](https://marketplace.visualstudio.com/items?itemName=GoogleCloudTools.cloudcode)
 
 ## getting started
+### local cluster development
 * open in visual studio code
-* edit ```kubernetes/monogdb-persistent-volume.yaml``` - change the hostPath to point to a directory which will store your mongodb database files
+* edit the files below and change the hostPath to point to a directory which will store your config and database files
+  * ```kubernetes/local/grafana/grafana-persistent-volume.yaml```
+  * ```kubernetes/local/monogdb/monogdb-persistent-volume.yaml```
+  * ```kubernetes/local/prometheus/prometheus-persistent-volume.yaml```
+* apply all kubernetes manifest yaml files in ```kubernetes/local/grafana```, ```kubernetes/local/monogdb```, ```kubernetes/local/prometheus```
 * from cloud code panel, select ```run app``` or ```debug app```
 
 ## command line
