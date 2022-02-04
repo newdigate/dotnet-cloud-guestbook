@@ -28,4 +28,4 @@ spec:
       volumes:
       - name: pv-mongodb
         persistentVolumeClaim:
-          claimName: dotnet-guestbook-monogdb-persistent-volume-claim
+          claimName: monogdb-persistent-volume-claim

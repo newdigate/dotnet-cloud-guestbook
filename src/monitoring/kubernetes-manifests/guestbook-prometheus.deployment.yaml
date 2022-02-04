@@ -20,3 +20,14 @@ spec:
       containers:
         - name: prometheus
           image: dotnet-guestbook-prometheus
+          volumeMounts:
+            - mountPath: /prometheus
+              name: pv-prometheus
+              subPath: storage
+            - mountPath: /etc/prometheus
+              name: pv-prometheus
+              subPath: config
+      volumes:
+      - name: pv-prometheus
+        persistentVolumeClaim:
+          claimName: prometheus-persistent-volume-claim

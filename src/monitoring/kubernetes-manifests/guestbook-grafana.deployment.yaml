@@ -26,3 +26,11 @@ spec:
           env:
             - name: GF_SECURITY_ADMIN_PASSWORD
               value: bitnami
+          volumeMounts:
+            - mountPath: /var/lib/grafana
+              name: pv-grafana
+              subPath: storage
+      volumes:
+      - name: pv-grafana
+        persistentVolumeClaim:
+          claimName: grafana-persistent-volume-claim
