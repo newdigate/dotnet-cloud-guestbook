@@ -28,7 +28,7 @@ Using google [cloud-code](https://marketplace.visualstudio.com/items?itemName=Go
 ## getting started
 ### local cluster development
 * open in visual studio code
-* edit the files below and change the `hostPath` to point to a directory which will store your config and database files
+* edit the files below and change the `hostPath` to point to ``` persistence/grafana```,```persistence/mongo```, ```persistence/prometheus``` folders in the root of this repository
   * ```kubernetes/local/grafana/grafana-persistent-volume.yaml```
   * ```kubernetes/local/monogdb/monogdb-persistent-volume.yaml```
   * ```kubernetes/local/prometheus/prometheus-persistent-volume.yaml```
