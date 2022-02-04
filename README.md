@@ -10,7 +10,7 @@ Using google [cloud-code](https://marketplace.visualstudio.com/items?itemName=Go
 
 ## requirements
 * If running locally, you'll need a **container** or **virtual machine manager**
-  * using [minikube](https://minikube.sigs.k8s.io/docs/start/)
+  * [minikube](https://minikube.sigs.k8s.io/docs/start/)
     * <a href="https://minikube.sigs.k8s.io/docs/drivers/docker/">Docker</a>
     | <a href="https://minikube.sigs.k8s.io/docs/drivers/hyperkit/">Hyperkit</a>
     | <a href="https://minikube.sigs.k8s.io/docs/drivers/hyperv/">Hyper-V</a>
@@ -19,8 +19,8 @@ Using google [cloud-code](https://marketplace.visualstudio.com/items?itemName=Go
     | <a href="https://minikube.sigs.k8s.io/docs/drivers/podman/">Podman</a>
     | <a href="https://minikube.sigs.k8s.io/docs/drivers/virtualbox/">VirtualBox</a>
     | <a href="https://minikube.sigs.k8s.io/docs/drivers/vmware/">VMware Fusion/Workstation</a>
-  * or [kubernetes in docker](https://docs.docker.com/desktop/kubernetes/)
-  * or [kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
+  * [kubernetes in docker](https://docs.docker.com/desktop/kubernetes/)
+  * [kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
 * For Kubernetes you'll need:
   * access to a running kubernetes cluster (local, or remote) via [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) client
 * [vscode](https://code.visualstudio.com/)
