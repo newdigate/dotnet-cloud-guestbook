@@ -4,3 +4,5 @@ persistence/*
 !persistence/grafana/README.md
 !persistence/mongodb/README.md
 !persistence/prometheus/README.md
+!persistence/prometheus/config/prometheus.yml
+!persistence/prometheus/storage/README.md
