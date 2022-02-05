@@ -27,13 +27,6 @@ namespace backend
                 throw new ArgumentException("GUESTBOOK_DB_ADDR environment variable is not set");
             }
 
-            // PORT environment variable is provided in guestbook-backend.deployment.yaml.
-            var port = Environment.GetEnvironmentVariable("PORT");
-            if (string.IsNullOrEmpty(port))
-            {
-                throw new ArgumentException("PORT environment variable is not set");
-            }
-
             services.AddControllers();
 
             // Pass the configuration for connecting to MongoDB to Dependency Injection container
