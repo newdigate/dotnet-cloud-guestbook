@@ -1,5 +1,5 @@
 # .net guestbook 
-```c#```, ```.net6.0```, ```aspnet-core```, ```minikube```, ```skaffold```, ```mongodb```, ```prometheus```, ```grafana```
+```c#```, ```.net6.0```, ```aspnet-core```, ```kubernetes```, ```skaffold```, ```mongodb```, ```prometheus```, ```grafana```, ```loki```, ```serilog```
 
 Using google [cloud-code](https://marketplace.visualstudio.com/items?itemName=GoogleCloudTools.cloudcode) sample [dotnet-guestbook](https://github.com/GoogleCloudPlatform/cloud-code-samples/tree/master/dotnet/dotnet-guestbook) code as a starting point, I've added some features:
   * a persistent database
