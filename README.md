@@ -29,12 +29,14 @@ Using google [cloud-code](https://marketplace.visualstudio.com/items?itemName=Go
 ## getting started
 ### local cluster development
 * open in visual studio code
-* edit the ```yaml``` files below - change the `hostPath` to point to ``` persistence/grafana```,```persistence/mongo```, ```persistence/prometheus``` folders in the root of this repository
-  * ```kubernetes/local/grafana/grafana-persistent-volume.yaml```
-  * ```kubernetes/local/monogdb/monogdb-persistent-volume.yaml```
-  * ```kubernetes/local/prometheus/prometheus-persistent-volume.yaml```
-* apply all kubernetes manifest yaml files in ```kubernetes/local/grafana```, ```kubernetes/local/monogdb```, ```kubernetes/local/prometheus```
-* from cloud code panel, select ```run app``` or ```debug app```
+* edit ```kubernetes/local/guestbook-persistent-volume.yaml```
+  * change the `hostPath` to point to ``` persistence``` folder in the root of this repository
+* from a command terminal, apply all kubernetes manifest yaml files in ```kubernetes/local```
+``` sh
+> cd persistence
+> kubectl apply -f .
+```
+* from vscode cloud code panel, select ```run app``` or ```debug app```
 
 ## command line
 ``` sh

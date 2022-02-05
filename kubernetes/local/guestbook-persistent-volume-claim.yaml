@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: prometheus-persistent-volume-claim
+  name: guestbook-persistent-volume-claim
 spec:
   accessModes:
     - ReadWriteMany
@@ -9,4 +9,4 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  storageClassName: prometheus-storageclass
+  storageClassName: guestbook-storageclass

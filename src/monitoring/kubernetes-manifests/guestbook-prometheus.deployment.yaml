@@ -23,11 +23,11 @@ spec:
           volumeMounts:
             - mountPath: /prometheus
               name: pv-prometheus
-              subPath: storage
+              subPath: prometheus/storage
             - mountPath: /etc/prometheus
               name: pv-prometheus
-              subPath: config
+              subPath: prometheus/config
       volumes:
       - name: pv-prometheus
         persistentVolumeClaim:
-          claimName: prometheus-persistent-volume-claim
+          claimName: guestbook-persistent-volume-claim

@@ -29,8 +29,8 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/grafana
               name: pv-grafana
-              subPath: storage
+              subPath: grafana
       volumes:
       - name: pv-grafana
         persistentVolumeClaim:
-          claimName: grafana-persistent-volume-claim
+          claimName: guestbook-persistent-volume-claim

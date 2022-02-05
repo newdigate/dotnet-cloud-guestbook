@@ -25,7 +25,8 @@ spec:
           volumeMounts:
             - mountPath: /data/db
               name: pv-mongodb
+              subPath: mongodb
       volumes:
       - name: pv-mongodb
         persistentVolumeClaim:
-          claimName: monogdb-persistent-volume-claim
+          claimName: guestbook-persistent-volume-claim
