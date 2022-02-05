@@ -5,6 +5,36 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": ".NET Core Launch (console) - frontend",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/frontend/bin/Debug/netcoreapp6.0/frontend.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "PORT" : "8080",
+        "GUESTBOOK_API_ADDR" : "127.0.0.1"
+      },
+      "stopAtEntry": false,
+      "console": "internalConsole"
+    },
+    {
+      "name": ".NET Core Launch (console) - backend",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/backend/bin/Debug/netcoreapp6.0/backend.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "PORT" : "8080",
+        "GUESTBOOK_DB_ADDR" : "127.0.0.1:27017"
+      },
+      "stopAtEntry": false,
+      "console": "internalConsole"
+    },
+    {
       "name": "Run on Kubernetes",
       "type": "cloudcode.kubernetes",
       "request": "launch",
