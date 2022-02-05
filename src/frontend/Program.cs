@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Prometheus;
+using Serilog;
 
 namespace dotnet_guestbook
 {
@@ -22,10 +23,10 @@ namespace dotnet_guestbook
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                
                 .ConfigureLogging(logging =>
                 {
                     logging.AddDebug();
+                    logging.AddSerilog();
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

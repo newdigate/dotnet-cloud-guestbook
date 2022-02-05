@@ -11,6 +11,8 @@ using Microsoft.Extensions.Options;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Prometheus;
+using Serilog;
+using Serilog.Sinks.Grafana.Loki;
 
 namespace dotnet_guestbook
 {
@@ -26,6 +28,11 @@ namespace dotnet_guestbook
         {
             Configuration = configuration;
             envConfig = new EnvironmentConfiguration();
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .WriteTo.GrafanaLoki("http://dotnet-guestbook-loki:3100")
+                .WriteTo.Console()
+                .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -58,7 +65,15 @@ namespace dotnet_guestbook
             });
             services.AddOpenTelemetryMetrics();
             services.AddSingleton<IEnvironmentConfiguration>(envConfig);
-            services.AddLogging();
+            services.AddLogging(
+                loggingBuilder =>
+      	            loggingBuilder.AddSerilog(
+                        new LoggerConfiguration()
+                            .Enrich.FromLogContext()
+                            .WriteTo.GrafanaLoki("http://dotnet-guestbook-loki:3100")
+                            .WriteTo.Console()
+                            .CreateLogger(), 
+                        dispose: true));
             services.AddControllersWithViews();
         }
 
