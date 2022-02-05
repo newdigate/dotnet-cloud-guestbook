@@ -5,4 +5,6 @@ persistence/*
 !persistence/mongodb/README.md
 !persistence/prometheus/README.md
 !persistence/prometheus/config/prometheus.yml
+!persistence/prometheus/config/README.md
+!persistence/prometheus/loki/README.md
 !persistence/prometheus/storage/README.md

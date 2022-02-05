@@ -1,0 +1,30 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dotnet-guestbook-loki
+  labels:
+    app: dotnet-guestbook
+    tier: loki
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dotnet-guestbook
+      tier: loki
+  template:
+    metadata:
+      labels:
+        app: dotnet-guestbook
+        tier: loki
+    spec:
+      containers:
+        - name: loki
+          image: dotnet-guestbook-loki
+          volumeMounts:
+            - mountPath: /loki
+              name: pv-loki
+              subPath: prometheus/loki
+      volumes:
+      - name: pv-loki
+        persistentVolumeClaim:
+          claimName: guestbook-persistent-volume-claim

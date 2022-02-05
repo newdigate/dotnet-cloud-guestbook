@@ -11,6 +11,8 @@ build:
     context: prometheus
   - image: dotnet-guestbook-grafana
     context: grafana
+  - image: dotnet-guestbook-loki
+    context: loki
 # defines the Kubernetes manifests to deploy on each run
 deploy:
   kubectl:
@@ -30,5 +32,9 @@ profiles:
         builder: "gcr.io/buildpacks/builder:v1"
     - image: dotnet-guestbook-grafana
       context: grafana
+      buildpacks:
+        builder: "gcr.io/buildpacks/builder:v1"
+    - image: dotnet-guestbook-loki
+      context: loki
       buildpacks:
         builder: "gcr.io/buildpacks/builder:v1"
