@@ -23,7 +23,7 @@ spec:
           volumeMounts:
             - mountPath: /loki
               name: pv-loki
-              subPath: prometheus/loki
+              subPath: loki
       volumes:
       - name: pv-loki
         persistentVolumeClaim:
