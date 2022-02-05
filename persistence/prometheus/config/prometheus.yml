@@ -30,4 +30,4 @@ scrape_configs:
 
   - job_name: "frontend"
     static_configs:
-      - targets: ["dotnet-guestbook-frontend:80"]
+      - targets: ["dotnet-guestbook-frontend:80","node-exporter:9100"]

@@ -52,12 +52,15 @@ Using google [cloud-code](https://marketplace.visualstudio.com/items?itemName=Go
 > minikube ssh -- docker system prune
 > kubectl exec --stdin --tty container-name -- /bin/bash
 > docker run --name proxy --rm -v /Users/nicholasnewdigate/Development/docker/proxy-cache:/cachedir -p 8000:8000 pmoust/squid-deb-proxy
+>  kubectl run dnsutils --image tutum/dnsutils -ti -- bash
 ```
 
 * configure grafana
   * login to [grafana](http://127.0.0.1:3000) admin, password: bitnami
   * import prometheus datasource http://dotnet-guestbook-prometheus:9090
-  * import grafana dashboard - https://grafana.com/grafana/dashboards/10915
+  * import grafana dashboards
+    * [aspnet core exporter](https://grafana.com/grafana/dashboards/10915)
+    * [node exporter full](https://grafana.com/grafana/dashboards/1860)
 
 * opentelemetry
   * [getting-started](https://opentelemetry.io/docs/instrumentation/net/getting-started/)
