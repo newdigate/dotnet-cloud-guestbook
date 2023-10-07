@@ -49,34 +49,15 @@
           "sourceFileMap": {
             "${workspaceFolder}/src/frontend": "/src"
           }
+        },
+        {
+          "image": "dotnet-guestbook-backend",
+          "containerName": "backend",
+          "sourceFileMap": {
+            "${workspaceFolder}/src/backend": "/src"
+          }
         }
       ]
-    },
-    {
-      "name": "Attach to Kubernetes pod (frontend)",
-      "type": "cloudcode.kubernetes",
-      "request": "attach",
-      "language": "NETCore",
-      "debugPort": 9229,
-      "localRoot": "${workspaceFolder}/src/frontend",
-      "remoteRoot": "/src",
-      "podSelector": {
-        "app": "dotnet-guestbook",
-        "tier": "frontend"
-      }
-    },
-    {
-      "name": "Attach to Kubernetes pod (backend)",
-      "type": "cloudcode.kubernetes",
-      "request": "attach",
-      "language": "NETCore",
-      "debugPort": 9229,
-      "localRoot": "${workspaceFolder}/src/backend",
-      "remoteRoot": "/src",
-      "podSelector": {
-        "app": "dotnet-guestbook",
-        "tier": "backend"
-      }
     }
   ]
 }

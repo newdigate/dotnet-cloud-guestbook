@@ -9,6 +9,8 @@ build:
   artifacts:
   - image: dotnet-guestbook-backend
     context: .
+    docker:
+      dockerfile: Dockerfile.debug
 # defines the Kubernetes manifests to deploy on each run
 deploy:
   kubectl:
@@ -26,3 +28,8 @@ profiles:
       context: .
       buildpacks:
         builder: "gcr.io/buildpacks/builder:v1"
+- name: release
+  patches:
+  - op: replace
+    path: /build/artifacts/0/docker/dockerfile
+    value: Dockerfile.release
