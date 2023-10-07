@@ -25,7 +25,14 @@ Using google [cloud-code](https://marketplace.visualstudio.com/items?itemName=Go
   * access to a running kubernetes cluster (local, or remote) via [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) client
 * [vscode](https://code.visualstudio.com/)
 * vscode extension: [cloud-code](https://marketplace.visualstudio.com/items?itemName=GoogleCloudTools.cloudcode)
-
+* 7 Oct 2023: using netcore debug helper image 
+  * by default dotnet v7 is built using alpine base images
+  * google cloud code was installing the debug adapters for netcore for the wrong architecture, alpine requires `linux-musc-amd64`, not `linux-amd64`. 
+  * to use debug adapters for alpine based images, run: 
+  ``` sh
+  $ skaffold config set --global debug-helpers-registry registry.hub.docker.com/nicnewdigate
+  ```
+    * the source of the above image is here [newdigate/container-debug-support](https://github.com/newdigate/container-debug-support)
 ## getting started
 ### local cluster development
 * open in visual studio code
