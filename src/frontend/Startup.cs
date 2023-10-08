@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using frontend;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -51,29 +52,34 @@ namespace dotnet_guestbook
                 .AddHttpClient(Options.DefaultName)
                 .UseHttpClientMetrics();
 
-            services.AddOpenTelemetryTracing(b =>
+            services.AddOpenTelemetry().WithTracing(builder =>
             {
-                b
-                .AddConsoleExporter()
-                .AddSource(serviceName)
-                .SetResourceBuilder(
-                    ResourceBuilder.CreateDefault()
-                        .AddService(serviceName: serviceName, serviceVersion: serviceVersion))
-                .AddHttpClientInstrumentation()
-                .AddAspNetCoreInstrumentation();
-                //.AddSqlClientInstrumentation();
+                builder.AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation()
+                    .AddSource(serviceName)
+                    .AddAspNetCoreInstrumentation()
+                    .AddConsoleExporter()
+                    .SetResourceBuilder(
+                        ResourceBuilder
+                            .CreateDefault()
+                            .AddService(serviceName: serviceName, serviceVersion: serviceVersion))
+                    .AddOtlpExporter(opts =>
+                    {
+                        opts.Endpoint = envConfig.JaegerHost;
+                    });
             });
-            services.AddOpenTelemetryMetrics();
             services.AddSingleton<IEnvironmentConfiguration>(envConfig);
             services.AddLogging(
                 loggingBuilder =>
-      	            loggingBuilder.AddSerilog(
-                        new LoggerConfiguration()
-                            .Enrich.FromLogContext()
-                            .WriteTo.GrafanaLoki("http://dotnet-guestbook-loki:3100")
-                            .WriteTo.Console()
-                            .CreateLogger(), 
-                        dispose: true));
+      	            loggingBuilder
+                        .AddSerilog(
+                            new LoggerConfiguration()
+                                .Enrich.FromLogContext()
+                                .WriteTo.GrafanaLoki("http://dotnet-guestbook-loki:3100")
+                                .CreateLogger()
+                            , 
+                            dispose: true)
+                        .AddConsole());
             services.AddControllersWithViews();
         }
 
@@ -99,6 +105,19 @@ namespace dotnet_guestbook
             // Set the address of the backend microservice
             envConfig.BackendAddress = $"http://{backendAddr}:{port}/messages";
 
+            var jaegerUrl = Environment.GetEnvironmentVariable("JAEGER_URI");
+            logger.LogInformation($"JAEGER_URI env var is set to {jaegerUrl}");
+            if (string.IsNullOrEmpty(jaegerUrl))
+            {
+                throw new ArgumentException("JAEGER_URI environment variable is not set");
+            }
+
+            Uri? jaegerUri = null;
+            if (Uri.TryCreate(jaegerUrl, UriKind.Absolute, out jaegerUri)) {
+                envConfig.JaegerHost = jaegerUri;
+            } else {
+                throw new ArgumentException("not able to parse JAEGER_URI {jaegerUrl}");
+            }
 
             if (env.IsDevelopment())
             {

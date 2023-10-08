@@ -35,3 +35,5 @@ spec:
           value: "8080"
         - name: GUESTBOOK_API_ADDR
           value: dotnet-guestbook-backend
+        - name: JAEGER_URI
+          value: http://dotnet-guestbook-tempo:4318

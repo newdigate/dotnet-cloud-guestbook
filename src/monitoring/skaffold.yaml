@@ -13,6 +13,10 @@ build:
     context: grafana
   - image: dotnet-guestbook-loki
     context: loki
+  - image: dotnet-guestbook-tempo
+    context: tempo
+  - image: dotnet-guestbook-promtail
+    context: promtail
 # defines the Kubernetes manifests to deploy on each run
 deploy:
   kubectl:
@@ -36,5 +40,13 @@ profiles:
         builder: "gcr.io/buildpacks/builder:v1"
     - image: dotnet-guestbook-loki
       context: loki
+      buildpacks:
+        builder: "gcr.io/buildpacks/builder:v1"
+    - image: dotnet-guestbook-tempo
+      context: tempo
+      buildpacks:
+        builder: "gcr.io/buildpacks/builder:v1"
+    - image: dotnet-guestbook-promtail
+      context: promtail
       buildpacks:
         builder: "gcr.io/buildpacks/builder:v1"

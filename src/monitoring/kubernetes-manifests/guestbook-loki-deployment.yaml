@@ -21,7 +21,7 @@ spec:
         - name: loki
           image: dotnet-guestbook-loki
           volumeMounts:
-            - mountPath: /loki
+            - mountPath: /tmp/loki
               name: pv-loki
               subPath: loki
       volumes:
