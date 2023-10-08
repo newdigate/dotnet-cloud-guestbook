@@ -1,0 +1,22 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dotnet-guestbook-promtail
+  labels:
+    app: dotnet-guestbook
+    tier: promtail
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dotnet-guestbook
+      tier: promtail
+  template:
+    metadata:
+      labels:
+        app: dotnet-guestbook
+        tier: promtail
+    spec:
+      containers:
+      - name: promtail
+        image: dotnet-guestbook-promtail

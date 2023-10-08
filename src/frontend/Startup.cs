@@ -65,7 +65,7 @@ namespace dotnet_guestbook
                             .AddService(serviceName: serviceName, serviceVersion: serviceVersion))
                     .AddOtlpExporter(opts =>
                     {
-                        opts.Endpoint = envConfig.JaegerHost;
+                        opts.Endpoint = envConfig.OtlpTraceSyncUri;
                     });
             });
             services.AddSingleton<IEnvironmentConfiguration>(envConfig);
@@ -114,7 +114,7 @@ namespace dotnet_guestbook
 
             Uri? jaegerUri = null;
             if (Uri.TryCreate(jaegerUrl, UriKind.Absolute, out jaegerUri)) {
-                envConfig.JaegerHost = jaegerUri;
+                envConfig.OtlpTraceSyncUri = jaegerUri;
             } else {
                 throw new ArgumentException("not able to parse JAEGER_URI {jaegerUrl}");
             }

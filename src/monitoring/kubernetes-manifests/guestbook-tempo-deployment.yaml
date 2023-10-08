@@ -1,0 +1,30 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dotnet-guestbook-tempo
+  labels:
+    app: dotnet-guestbook
+    tier: tempo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dotnet-guestbook
+      tier: tempo
+  template:
+    metadata:
+      labels:
+        app: dotnet-guestbook
+        tier: tempo
+    spec:
+      containers:
+        - name: tempo
+          image: dotnet-guestbook-tempo
+          volumeMounts:
+            - mountPath: /tmp/tempo
+              name: pv-tempo
+              subPath: tempo/tempo-data
+      volumes:
+      - name: pv-tempo
+        persistentVolumeClaim:
+          claimName: guestbook-persistent-volume-claim
