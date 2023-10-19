@@ -10,6 +10,9 @@ spec:
     - port: 4318
       targetPort: 4318
       name: tempo-http
+    - port: 4317
+      targetPort: 4317
+      name: tempo-grpc
     - port: 3200
       targetPort: 3200
       name: tempo-http-server

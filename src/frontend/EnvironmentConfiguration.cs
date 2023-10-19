@@ -12,5 +12,6 @@ namespace frontend
     {
         public string? BackendAddress { get; set; }
         public Uri? OtlpTraceSyncUri { get; set; }
+        public string ServiceName { get; internal set; }
     }
 }

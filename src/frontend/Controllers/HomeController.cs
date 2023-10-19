@@ -8,20 +8,24 @@ using System.Net.Http;
 using frontend;
 using System.Net.Http.Headers;
 using System.Diagnostics;
-using Prometheus;
+using System.Diagnostics.Metrics;
 
 namespace dotnet_guestbook.Controllers
 {
     public class HomeController : Controller
     {
+        private static readonly Meter MyMeter = new("MyCompany.MyProduct.MyLibrary", "1.0");
+        private static readonly Counter<long> _metric_index_get = MyMeter.CreateCounter<long>($"{nameof(HomeController)} {nameof(Index)} GET");
+        private static readonly Counter<long> _metric_index_get_error = MyMeter.CreateCounter<long>($"{nameof(HomeController)} {nameof(Index)} GET ERROR");
+        private static readonly Counter<long> _metric_index_post = MyMeter.CreateCounter<long>($"{nameof(HomeController)} {nameof(Index)} POST");
+        private static readonly Counter<long> _metric_index_post_error = MyMeter.CreateCounter<long>($"{nameof(HomeController)} {nameof(Index)} POST ERROR");
+
         private ILogger _logger;
         private IEnvironmentConfiguration _envConfig;
         private IHttpClientFactory _factory;
-        private static readonly ActivitySource MyActivitySource = new ActivitySource(nameof(HomeController));
-        private static readonly Counter _metric_index_get = Metrics.CreateCounter("sampleapp_home_controller_index_get", "index_get");
-        private static readonly Counter _metric_index_get_error = Metrics.CreateCounter("sampleapp_home_controller_index_get_error", "index_get_error");
-        private static readonly Counter _metric_index_post = Metrics.CreateCounter("sampleapp_home_controller_index_post", "index_post");
-        private static readonly Counter _metric_index_post_error = Metrics.CreateCounter("sampleapp_home_controller_index_post_error", "index_post_error");
+
+        private static ActivitySource MyActivitySource = new ActivitySource(Startup.defaultServiceName, Startup.serviceVersion);
+
 
         public HomeController(
             IHttpClientFactory httpFactory,
@@ -43,7 +47,7 @@ namespace dotnet_guestbook.Controllers
             activity?.SetTag("bar", "Hello, World!");
             activity?.SetTag("baz", new int[] { 1, 2, 3 });
 
-            _metric_index_get.Inc();
+            _metric_index_get.Add(1);
             // Get the entries from the backend
             try
             {
@@ -61,7 +65,7 @@ namespace dotnet_guestbook.Controllers
             catch (Exception e)
             {
                 _logger.LogError(e.ToString());
-                _metric_index_get_error.Inc();
+                _metric_index_get_error.Add(1);
                 return View();
             }
         }
@@ -71,7 +75,7 @@ namespace dotnet_guestbook.Controllers
         public async Task<IActionResult> Post([FromForm] GuestbookEntry entry)
         {
             _logger.LogInformation($"Calling backend at {_envConfig.BackendAddress} for message authored by {entry.Name}");
-            _metric_index_post.Inc();
+            _metric_index_post.Add(1);
             using Activity? activity = MyActivitySource.StartActivity("IndexPost");
             try
             {
@@ -86,9 +90,17 @@ namespace dotnet_guestbook.Controllers
             catch (Exception e)
             {
                 _logger.LogError(e.ToString());
-                _metric_index_post_error.Inc();
+                _metric_index_post_error.Add(1);
                 return View();
             }
+        }
+ 
+        [HttpGet]
+        public async Task<IActionResult> Test() {
+            using Activity? activity = MyActivitySource.StartActivity("SomeWork");
+            
+            await Task.Delay(1000);
+            return new JsonResult("sfdd");
         }
     }
 }

@@ -6,6 +6,7 @@ distributor:
     otlp:
       protocols:
         http:
+        grpc:
 
 ingester:
   trace_idle_period: 10s               # the length of time after a trace has not received spans to consider it complete and flush it
@@ -19,6 +20,16 @@ compactor:
     block_retention: 1h
     compacted_block_retention: 10m
 
+metrics_generator:
+  registry:
+    external_labels:
+      source: tempo
+      cluster: docker-compose
+  storage:
+    path: /tmp/tempo/generator/wal
+    remote_write:
+      - url: http://dotnet-guestbook-prometheus:9090/api/v1/write
+        send_exemplars: true
 storage:
   trace:
     backend: local                     # backend configuration to use

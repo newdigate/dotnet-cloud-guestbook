@@ -9,9 +9,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using OpenTelemetry;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using Prometheus;
 using Serilog;
 using Serilog.Sinks.Grafana.Loki;
 
@@ -21,19 +23,20 @@ namespace dotnet_guestbook
     {
 
         // Define some important constants and the activity source
-        string serviceName = "MyCompany.MyProduct.MyService";
-        string serviceVersion = "1.0.0";
+        public const string defaultServiceName = "MyCompany.MyProduct.MyService";
+        public const string serviceVersion = "1.0.0";
         private EnvironmentConfiguration envConfig;
 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
             envConfig = new EnvironmentConfiguration();
+            /*
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .WriteTo.GrafanaLoki("http://dotnet-guestbook-loki:3100")
                 .WriteTo.Console()
-                .CreateLogger();
+                .CreateLogger(); */
         }
 
         public IConfiguration Configuration { get; }
@@ -49,40 +52,50 @@ namespace dotnet_guestbook
             });
 
             services
-                .AddHttpClient(Options.DefaultName)
-                .UseHttpClientMetrics();
-
-            services.AddOpenTelemetry().WithTracing(builder =>
-            {
-                builder.AddAspNetCoreInstrumentation()
-                    .AddHttpClientInstrumentation()
-                    .AddSource(serviceName)
-                    .AddAspNetCoreInstrumentation()
-                    .AddConsoleExporter()
-                    .SetResourceBuilder(
-                        ResourceBuilder
-                            .CreateDefault()
-                            .AddService(serviceName: serviceName, serviceVersion: serviceVersion))
-                    .AddOtlpExporter(opts =>
+                .AddHttpClient(Options.DefaultName);
+            services
+                .AddOpenTelemetry()
+                .ConfigureResource(b =>
+                {
+                    b.AddService(defaultServiceName);
+                })
+                .WithTracing(b => b
+                    .AddAspNetCoreInstrumentation(o =>
                     {
-                        opts.Endpoint = envConfig.OtlpTraceSyncUri;
-                    });
-            });
+                        o.Filter = ctx => ctx.Request.Path != "/metrics";
+                    })
+                    .AddHttpClientInstrumentation()
+                    .AddSource("TraceActivityName")
+                    .AddOtlpExporter( 
+                        c => { 
+                            c.Endpoint = new System.Uri("http://dotnet-guestbook-tempo:4317"); 
+                            c.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
+                        })
+                    .AddConsoleExporter())
+                .WithMetrics(b => b
+                    .AddAspNetCoreInstrumentation(o =>
+                    {
+                        o.Filter = (_, ctx) => ctx.Request.Path != "/metrics";
+                    })
+                    .AddHttpClientInstrumentation()
+                    .AddRuntimeInstrumentation()
+                    .AddProcessInstrumentation()
+                    .AddPrometheusExporter());
+
             services.AddSingleton<IEnvironmentConfiguration>(envConfig);
             services.AddLogging(
                 loggingBuilder =>
-      	            loggingBuilder
+                    loggingBuilder
                         .AddSerilog(
                             new LoggerConfiguration()
                                 .Enrich.FromLogContext()
                                 .WriteTo.GrafanaLoki("http://dotnet-guestbook-loki:3100")
-                                .CreateLogger()
-                            , 
+                                .CreateLogger(), 
                             dispose: true)
                         .AddConsole());
             services.AddControllersWithViews();
         }
-
+    
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,  IWebHostEnvironment env, ILogger<Startup> logger)
         {
@@ -118,6 +131,14 @@ namespace dotnet_guestbook
             } else {
                 throw new ArgumentException("not able to parse JAEGER_URI {jaegerUrl}");
             }
+            
+            var serviceName = Environment.GetEnvironmentVariable("SERVICE_NAME");
+            logger.LogInformation($"SERVICE_NAME env var is set to {serviceName}");
+            if (string.IsNullOrEmpty(serviceName))
+            {
+                serviceName = defaultServiceName;
+            }
+            envConfig.ServiceName = serviceName;
 
             if (env.IsDevelopment())
             {
@@ -132,17 +153,6 @@ namespace dotnet_guestbook
             app.UseCookiePolicy();
 
             app.UseRouting();
-            app.UseHttpMetrics(options =>
-            {
-                // This identifies the page when using Razor Pages.
-                options.AddRouteParameter("page");
-            });            
-            app.Map("/metrics", metricsApp =>
-            {
-                //metricsApp.UseMiddleware<BasicAuthMiddleware>("Contoso Corporation");
-                // We already specified URL prefix in .Map() above, no need to specify it again here.
-                metricsApp.UseMetricServer("");
-            });
             app.UseEndpoints(endpoints =>
             {
                 // endpoints.MapControllerRoute(
@@ -158,6 +168,8 @@ namespace dotnet_guestbook
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            app.UseOpenTelemetryPrometheusScrapingEndpoint();
+            app.UseHttpLogging();
 
         }
     }
