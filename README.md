@@ -61,6 +61,7 @@ Using google [cloud-code](https://marketplace.visualstudio.com/items?itemName=Go
 > docker run --name proxy --rm -v /Users/nicholasnewdigate/Development/docker/proxy-cache:/cachedir -p 8000:8000 pmoust/squid-deb-proxy
 > docker run --name mongodb --rm -v /Users/nicholasnewdigate/Development/guestbook-dotnet6/persistence/mongodb:/data/db -p 27017:27017 mongo:4
 >  kubectl run dnsutils --image tutum/dnsutils -ti -- bash
+> skaffold config set --global debug-helpers-registry registry.hub.docker.com/nicnewdigate
 ```
 
 * configure grafana
