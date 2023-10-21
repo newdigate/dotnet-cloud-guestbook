@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using frontend;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -89,7 +87,12 @@ namespace dotnet_guestbook
                         .AddSerilog(
                             new LoggerConfiguration()
                                 .Enrich.FromLogContext()
-                                .WriteTo.GrafanaLoki("http://dotnet-guestbook-loki:3100")
+                                .WriteTo.GrafanaLoki("http://dotnet-guestbook-loki:3100", 
+                                    labels:
+                                        new LokiLabel[] {
+                                            new LokiLabel() { Key = "app", Value="dotnet-guestbook-frontend"},
+                                        }, 
+                                    propertiesAsLabels : new [] {"app"})
                                 .CreateLogger(), 
                             dispose: true)
                         .AddConsole());

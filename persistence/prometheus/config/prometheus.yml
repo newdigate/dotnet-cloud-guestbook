@@ -43,3 +43,6 @@ scrape_configs:
   - job_name: "grafana"
     static_configs:
       - targets: ["dotnet-guestbook-grafana:3000"]
+  - job_name: "backend"
+    static_configs:
+      - targets: ["dotnet-guestbook-backend:8080"]
